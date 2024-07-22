@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Poll
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">{{ poll.title }}</h1>
+    <p>{{ poll.description }}</p>
+    <p>Created at: {{ poll.created_at }}</p>
+    <p>Valid till: {{ poll.valid_till }}</p>
+
+{% if user_form %}
+    <div class="form bg-dark bg-gradient">
+    <form method="post" >
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <button type="submit">Submit Info</button>
+    </form>
+    </div>
+{% else %}
+<div class="form p-3 m-3  bg-gradient">
+    <form method="post">
+        {% csrf_token %}
+        {% for mcq in mcqs %}
+            <h3>{{ mcq.question }}</h3>
+            <input type="radio" name="choice_{{ mcq.id }}" value="A"> {{ mcq.optionA }}<br>
+            <input type="radio" name="choice_{{ mcq.id }}" value="B"> {{ mcq.optionB }}<br>
+            <input type="radio" name="choice_{{ mcq.id }}" value="C"> {{ mcq.optionC }}<br>
+            <input type="radio" name="choice_{{ mcq.id }}" value="D"> {{ mcq.optionD }}<br>
+        {% endfor %}
+        {% for desc in descriptions %}
+            <h3>{{ desc.question }}</h3>
+            <textarea name="answer_{{ desc.id }}"></textarea>
+        {% endfor %}
+        <br>
+        <button type="submit" class="btn btn-success">Submit Poll</button>
+    </form>
+</div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Poll Results
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Results for {{ poll.title }}</h1>
+    <p>{{ poll.description }}</p>
+
+    <div class="list-group p-4 m-3">
+        {% for response in responses %}
+            <div class="list-group-item">
+                <h5 class="mb-1">{{ response.user_info.name }} ({{ response.user_info.phone_number }})</h5>
+                {% if response.mcq %}
+                    <p class="mb-1"><strong>Question:</strong> {{ response.mcq.question }}</p>
+                    <p class="mb-1"><strong>Your Answer:</strong> {{ response.answer }}</p>
+                    <p class="mb-1"><strong>Correct Answer:</strong> {{ response.mcq.correct_answer }}</p>
+                    <p class="mb-1"><strong>Score:</strong> {{ response.score }}</p>
+                {% elif response.description %}
+                    <p class="mb-1"><strong>Question:</strong> {{ response.description.question }}</p>
+                    <p class="mb-1"><strong>Your Answer:</strong> {{ response.answer }}</p>
+                    <p class="mb-1"><strong>Expected Answer:</strong> {{ response.description.answer }}</p>
+                    <p class="mb-1"><strong>Score:</strong> {{ response.score }}</p>
+                {% endif %}
+                <p class="mb-1"><strong>Submitted At:</strong> {{ response.submit_time }}</p>
+            </div>
+        {% endfor %}
+        <a href="{% url 'index' %}" class='btn btn-primary m-4 p-2'>Home</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Available Polls
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Available Polls</h1>
+    <hr>
+    <div class="row">
+        {% for poll in polls %}
+            <div class="col-md-6">
+                <div class="card mb-4 bg-black bg-gradient" >
+                    <div class="card-body">
+                        <h2 class="card-title">{{ poll.title }}</h2>
+                        <p class="card-text">{{ poll.description }}</p>
+                        <p><strong>Created at:</strong> {{ poll.created_at }}</p>
+                        <p><strong>Valid till:</strong> {{ poll.valid_till }}</p>
+                        <a href="{% url 'poll_detail' poll.id %}" class="btn btn-primary">Take this poll</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <h1 class="mb-4">LeaderBoard</h1>
+        <hr>
+       
+        <div class="row">
+            
+           <table class="table">
+  <thead class="table-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Time</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for response in responses %}
+    
+    <tr>
+      <th scope="row">{{response.id}}</th>
+      <td>{{response.user_info.name}}</td>
+      <td>{{response.submit_time}}</td>
+      <td>{{response.score}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}
