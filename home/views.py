@@ -5,7 +5,7 @@ from .forms import UserInfoForm
 
 def index(request):
     polls = Poll.objects.all()
-    responses = Response.objects.order_by('-submit_time','score')
+    responses = Response.objects.order_by('submit_time','-score')
 
     return render(request, 'polls/index.html', {'polls': polls, 'responses':responses})
 
